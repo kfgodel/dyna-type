@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>dyna-type</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+
+  <parent>
+    <artifactId>java-pom</artifactId>
+    <groupId>info.kfgodel</groupId>
+    <version>0.1.5-SNAPSHOT</version>
+    <relativePath>../kfgodel-java-pom/pom.xml</relativePath>
+  </parent>
+
+  <name>Dyna Type</name>
+  <description>Project to test the concept of multi typed objects that can chang its type over time, or depending on
+    context
+  </description>
+  <url>https://github.com/kfgodel/dyna-type</url>
+
+
+</project>
