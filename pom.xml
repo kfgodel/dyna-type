@@ -20,5 +20,56 @@
   </description>
   <url>https://github.com/kfgodel/dyna-type</url>
 
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <developerConnection>scm:git:ssh://github.com/kfgodel/dyna-type.git</developerConnection>
+    <connection>${project.scm.developerConnection}</connection>
+    <url>${project.url}</url>
+  </scm>
+
+  <properties>
+    <version.guava>27.0-jre</version.guava>
+  </properties>
+
+
+  <dependencies>
+
+    <!-- Allows selectively proxying methods -->
+    <dependency>
+      <groupId>net.bytebuddy</groupId>
+      <artifactId>byte-buddy</artifactId>
+      <version>1.9.2</version>
+    </dependency>
+
+    <!-- Spec like tests -->
+    <dependency>
+      <groupId>info.kfgodel</groupId>
+      <artifactId>java-spec</artifactId>
+      <version>2.4.1</version>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+  <developers>
+    <developer>
+      <id>dlgarcia</id>
+      <name>Dario L Garcia</name>
+      <email>dario.garcia@10pines.com</email>
+      <organization>10Pines SRL</organization>
+      <organizationUrl>https://www.10pines.com/</organizationUrl>
+      <roles>
+        <role>architect</role>
+        <role>developer</role>
+      </roles>
+    </developer>
+  </developers>
 
 </project>
