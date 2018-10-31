@@ -26,6 +26,11 @@ public class BasicPropertiesAccessTest extends JavaSpec<DynaTestContext> {
         context().objectWithAccessors().setName("a new name");
         assertThat(context().objectWithAccessors().getName()).isEqualTo("a new name");
       });
+
+      it("can have calculated properties", () -> {
+        context().objectWithAccessors().setName("BareName");
+        assertThat(context().objectWithAccessors().getTitledName()).isEqualTo("Mr/Mrs. BareName");
+      });   
     });
 
   }

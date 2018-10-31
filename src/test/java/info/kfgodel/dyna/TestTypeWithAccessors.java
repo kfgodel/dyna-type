@@ -7,6 +7,9 @@ package info.kfgodel.dyna;
 public interface TestTypeWithAccessors {
 
   String getName();
-
   void setName(String aName);
+
+  default String getTitledName() {
+    return "Mr/Mrs. " + getName();
+  }
 }
