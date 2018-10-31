@@ -20,27 +20,21 @@ public interface TestTypeWithAccessors {
   }
 
   void runnable();
-
   void setRunnable(Runnable definition);
 
   String supplier();
-
   void setSupplier(Supplier<String> definition);
 
   void consumer(String value);
-
   void setConsumer(Consumer<String> definition);
 
   void biConsumer(String value1, String value2);
-
   void setBiConsumer(BiConsumer<String, String> definition);
 
   String function(String value);
-
   void setFunction(Function<String, String> definition);
 
   String biFunction(String value1, String value2);
-
   void setBiFunction(BiFunction<String, String, String> definition);
 
 }

@@ -8,6 +8,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * This type represents the method invocation handler for dyna type objects
@@ -36,6 +41,28 @@ public class DynaTypeInvocationHandler implements InvocationHandler {
       Runnable runnableLambda = (Runnable) value;
       runnableLambda.run();
       return null;
+    }
+    if ((value instanceof Supplier)) {
+      Supplier supplierLambda = (Supplier) value;
+      return supplierLambda.get();
+    }
+    if ((value instanceof Consumer) && args.length > 0) {
+      Consumer consumerLambda = (Consumer) value;
+      consumerLambda.accept(args[0]);
+      return null;
+    }
+    if ((value instanceof BiConsumer) && args.length > 1) {
+      BiConsumer biConsumerLambda = (BiConsumer) value;
+      biConsumerLambda.accept(args[0], args[1]);
+      return null;
+    }
+    if ((value instanceof Function) && args.length > 0) {
+      Function functionLambda = (Function) value;
+      return functionLambda.apply(args[0]);
+    }
+    if ((value instanceof BiFunction) && args.length > 1) {
+      BiFunction biFunctionLambda = (BiFunction) value;
+      return biFunctionLambda.apply(args[0], args[1]);
     }
 
     throw new DynaException("Missing implementation for method[" + method + "] and args: " + Arrays.toString(args));

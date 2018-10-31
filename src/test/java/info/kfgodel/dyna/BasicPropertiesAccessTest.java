@@ -52,6 +52,83 @@ public class BasicPropertiesAccessTest extends JavaSpec<DynaTestContext> {
           });
         });
 
+        describe("if the lambda is a Supplier", () -> {
+          beforeEach(() -> {
+            context().objectWithAccessors().setSupplier(() -> "result");
+          });
+          it("is used to implement as the method behavior", () -> {
+            String result = context().objectWithAccessors().supplier();
+
+            assertThat(result).isEqualTo("result");
+          });
+          xit("ignores any method arguments", () -> {
+
+          });
+        });
+
+        describe("if the lambda is a Consumer", () -> {
+          Variable<String> capturedValue = Variable.of(null);
+          beforeEach(() -> {
+            context().objectWithAccessors().setConsumer(capturedValue::set);
+          });
+          it("is used to implement as the method behavior", () -> {
+            context().objectWithAccessors().consumer("a value");
+
+            assertThat(capturedValue.get()).isEqualTo("a value");
+          });
+          xit("ignores any additional method arguments", () -> {
+
+          });
+          xit("always returns null", () -> { //primitives?
+
+          });
+        });
+
+        describe("if the lambda is a Function", () -> {
+          beforeEach(() -> {
+            context().objectWithAccessors().setFunction((value) -> value + "&" + value);
+          });
+          it("is used to implement as the method behavior", () -> {
+            String result = context().objectWithAccessors().function("aValue");
+
+            assertThat(result).isEqualTo("aValue&aValue");
+          });
+          xit("ignores any additional method arguments", () -> {
+
+          });
+        });
+
+        describe("if the lambda is a BiConsumer", () -> {
+          Variable<String> capturedValue = Variable.of(null);
+          beforeEach(() -> {
+            context().objectWithAccessors().setBiConsumer((firstArg, secondArg) -> capturedValue.set(firstArg + " " + secondArg));
+          });
+          it("is used to implement as the method behavior", () -> {
+            context().objectWithAccessors().biConsumer("1", "2");
+
+            assertThat(capturedValue.get()).isEqualTo("1 2");
+          });
+          xit("ignores any additional method arguments", () -> {
+
+          });
+          xit("always returns null", () -> { //primitives?
+
+          });
+        });
+
+        describe("if the lambda is a BiFunction", () -> {
+          beforeEach(() -> {
+            context().objectWithAccessors().setBiFunction((firstArg, secondArg) -> firstArg + " " + secondArg);
+          });
+          it("is used to implement as the method behavior", () -> {
+            String result = context().objectWithAccessors().biFunction("A", "B");
+
+            assertThat(result).isEqualTo("A B");
+          });
+          xit("ignores any additional method arguments", () -> {
+
+          });
+        });
 
       });
     });
