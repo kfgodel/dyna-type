@@ -11,12 +11,9 @@ import java.util.function.Supplier;
 public interface DynaTestContext extends TestContext {
 
   TestTypeWithAccessors objectWithAccessors();
-
   void objectWithAccessors(Supplier<TestTypeWithAccessors> definition);
 
   DynaTypeInstantiator instantiator();
-
   void instantiator(Supplier<DynaTypeInstantiator> definition);
-
 
 }

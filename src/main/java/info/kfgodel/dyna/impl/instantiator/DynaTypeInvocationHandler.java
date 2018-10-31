@@ -31,6 +31,13 @@ public class DynaTypeInvocationHandler implements InvocationHandler {
       return dynaState.put(settedProperty.get(), args[0]);
     }
 
+    Object value = dynaState.get(methodName);
+    if (value instanceof Runnable) {
+      Runnable runnableLambda = (Runnable) value;
+      runnableLambda.run();
+      return null;
+    }
+
     throw new DynaException("Missing implementation for method[" + method + "] and args: " + Arrays.toString(args));
   }
 
@@ -51,7 +58,7 @@ public class DynaTypeInvocationHandler implements InvocationHandler {
       return Optional.empty();
     }
     String lowerFirstChar = withoutPrefix.substring(0, 1).toLowerCase();
-    String restOfChars = lowerFirstChar + withoutPrefix.substring(2);
+    String restOfChars = withoutPrefix.substring(lowerFirstChar.length());
     String propertyName = lowerFirstChar + restOfChars;
     return Optional.of(propertyName);
   }
