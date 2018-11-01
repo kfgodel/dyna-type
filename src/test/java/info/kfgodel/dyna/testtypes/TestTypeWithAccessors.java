@@ -9,8 +9,22 @@ public interface TestTypeWithAccessors {
   String getName();
   void setName(String aName);
 
-  default String getTitledName() {
-    return "Mr/Mrs. " + getName();
+  default String getSurname() {
+    return "World";
+  }
+
+  default void setSurname(String value) {
+    // Value is ignored
+  }
+
+  default String getFullName() {
+    return getName() + " " + getSurname() + "!";
+  }
+
+  default void setFullName(String fullName) {
+    String[] parts = fullName.split(" ");
+    this.setName(parts[0]);
+    this.setSurname(parts[1]);
   }
 
 }

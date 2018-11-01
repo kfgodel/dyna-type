@@ -17,6 +17,7 @@ import java.util.function.Supplier;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ * This test verifies that a lambda can be used to define a method implementation
  * Date: 01/11/18 - 00:28
  */
 @RunWith(JavaSpecRunner.class)
