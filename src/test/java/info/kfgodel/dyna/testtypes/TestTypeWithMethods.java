@@ -8,13 +8,29 @@ public interface TestTypeWithMethods {
 
   void runnable();
 
-  String supplier();
+  void methodWithoutReturn();
 
   void consumer(String value);
 
+  void methodWithoutReturn(String value);
+
   void biConsumer(String value1, String value2);
+
+  void methodWithoutReturn(String value1, String value2);
+
+  void methodWithoutReturn(String value1, String value2, String value3);
+
+  String supplier();
+
+  String methodWithReturn();
 
   String function(String value);
 
+  String methodWithReturn(String value1);
+
   String biFunction(String value1, String value2);
+
+  String methodWithReturn(String value1, String value2);
+
+  String methodWithReturn(String value1, String value2, String value3);
 }

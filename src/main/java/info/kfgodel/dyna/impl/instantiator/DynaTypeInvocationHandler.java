@@ -46,26 +46,33 @@ public class DynaTypeInvocationHandler implements InvocationHandler {
       Supplier supplierLambda = (Supplier) value;
       return supplierLambda.get();
     }
-    if ((value instanceof Consumer) && args.length > 0) {
+    if ((value instanceof Consumer)) {
       Consumer consumerLambda = (Consumer) value;
-      consumerLambda.accept(args[0]);
+      consumerLambda.accept(ensureArg(args, 0));
       return null;
     }
-    if ((value instanceof BiConsumer) && args.length > 1) {
+    if ((value instanceof BiConsumer)) {
       BiConsumer biConsumerLambda = (BiConsumer) value;
-      biConsumerLambda.accept(args[0], args[1]);
+      biConsumerLambda.accept(ensureArg(args, 0), ensureArg(args, 1));
       return null;
     }
-    if ((value instanceof Function) && args.length > 0) {
+    if ((value instanceof Function)) {
       Function functionLambda = (Function) value;
-      return functionLambda.apply(args[0]);
+      return functionLambda.apply(ensureArg(args, 0));
     }
-    if ((value instanceof BiFunction) && args.length > 1) {
+    if ((value instanceof BiFunction)) {
       BiFunction biFunctionLambda = (BiFunction) value;
-      return biFunctionLambda.apply(args[0], args[1]);
+      return biFunctionLambda.apply(ensureArg(args, 0), ensureArg(args, 1));
     }
 
     throw new DynaException("Missing implementation for method[" + method + "] and args: " + Arrays.toString(args));
+  }
+
+  private Object ensureArg(Object[] args, int argumentIndex) {
+    if (args == null || argumentIndex >= args.length) {
+      return null;
+    }
+    return args[argumentIndex];
   }
 
   private Optional<String> tryAsSetter(String methodName) {

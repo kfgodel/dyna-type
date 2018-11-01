@@ -34,7 +34,7 @@ public class MethodExecutionTest extends JavaSpec<DynaTestContext> {
 
 
         describe("if the lambda is a runnable", () -> {
-          context().propertyName(() -> "runnable");
+          context().propertyName(() -> "methodWithoutReturn");
 
           Variable<Boolean> executed = Variable.of(false);
           beforeEach(() -> {
@@ -42,104 +42,148 @@ public class MethodExecutionTest extends JavaSpec<DynaTestContext> {
             context().lambda(() -> (Runnable) () -> executed.set(true));
           });
 
-          it("uses the lambda as the behavior of an undefined method with the same name", () -> {
-            context().objectWithMethods().runnable();
+          it("executes the lambda when an undefined method is called having the same property name", () -> {
+            context().objectWithMethods().methodWithoutReturn();
 
             assertThat(executed.get()).isTrue();
           });
 
-          xit("ignores any method arguments", () -> {
+          it("ignores any arguments the method may have", () -> {
+            context().objectWithMethods().methodWithoutReturn("ignored", "and this too");
 
+            assertThat(executed.get()).isTrue();
           });
-          xit("always returns null", () -> { //primitives?
+          it("always returns null if the method has a return value", () -> { //primitives?
+            context().propertyName(() -> "methodWithReturn");
 
+            String result = context().objectWithMethods().methodWithReturn();
+
+            assertThat(result).isNull();
           });
 
         });
 
         describe("if the lambda is a Supplier", () -> {
-          context().propertyName(() -> "supplier");
+          context().propertyName(() -> "methodWithReturn");
           beforeEach(() -> {
             context().lambda(() -> (Supplier) () -> "result");
           });
-          it("is used to implement as the method behavior", () -> {
-            String result = context().objectWithMethods().supplier();
+          it("executes the lamda to get the result of an undefined method having the same property name", () -> {
+            String result = context().objectWithMethods().methodWithReturn();
 
             assertThat(result).isEqualTo("result");
           });
-          xit("ignores any method arguments", () -> {
+          it("ignores any arguments the method may have", () -> {
+            String result = context().objectWithMethods().methodWithReturn("ignored", "and this too");
 
+            assertThat(result).isEqualTo("result");
           });
         });
 
         describe("if the lambda is a Consumer", () -> {
-          context().propertyName(() -> "consumer");
+          context().propertyName(() -> "methodWithoutReturn");
 
           Variable<String> capturedValue = Variable.of(null);
           beforeEach(() -> {
             capturedValue.set(null);
             context().lambda(() -> (Consumer<String>) capturedValue::set);
           });
-          it("is used to implement as the method behavior", () -> {
-            context().objectWithMethods().consumer("a value");
+          it("executes the lambda when an undefined method is called having the same property name", () -> {
+            context().objectWithMethods().methodWithoutReturn("a value");
 
             assertThat(capturedValue.get()).isEqualTo("a value");
           });
-          xit("ignores any additional method arguments", () -> {
+          it("ignores any additional method arguments", () -> {
+            context().objectWithMethods().methodWithoutReturn("a value", "ignored");
 
+            assertThat(capturedValue.get()).isEqualTo("a value");
           });
-          xit("always returns null", () -> { //primitives?
+          it("always returns null if the method has a return value", () -> { //primitives?
+            context().propertyName(() -> "methodWithReturn");
 
+            String result = context().objectWithMethods().methodWithReturn("a value");
+
+            assertThat(result).isNull();
+          });
+          it("passes null to the lambda if the method doesn't have enough arguments", () -> {
+            context().objectWithMethods().methodWithoutReturn();
+
+            assertThat(capturedValue.get()).isNull();
           });
         });
 
         describe("if the lambda is a Function", () -> {
-          context().propertyName(() -> "function");
+          context().propertyName(() -> "methodWithReturn");
           beforeEach(() -> {
-            context().lambda(() -> (Function) (value) -> value + "&" + value);
+            context().lambda(() -> (Function) (value) -> value + "++");
           });
-          it("is used to implement as the method behavior", () -> {
-            String result = context().objectWithMethods().function("aValue");
+          it("executes the lambda when an undefined method is called having the same property name", () -> {
+            String result = context().objectWithMethods().methodWithReturn("a value");
 
-            assertThat(result).isEqualTo("aValue&aValue");
+            assertThat(result).isEqualTo("a value++");
           });
-          xit("ignores any additional method arguments", () -> {
+          it("ignores any additional method arguments", () -> {
+            String result = context().objectWithMethods().methodWithReturn("a value", "ignored");
 
+            assertThat(result).isEqualTo("a value++");
+          });
+          it("passes null to the lambda if the method doesn't have enough arguments", () -> {
+            String result = context().objectWithMethods().methodWithReturn();
+
+            assertThat(result).isEqualTo("null++");
           });
         });
 
         describe("if the lambda is a BiConsumer", () -> {
-          context().propertyName(() -> "biConsumer");
+          context().propertyName(() -> "methodWithoutReturn");
           Variable<String> capturedValue = Variable.of(null);
           beforeEach(() -> {
             capturedValue.set(null);
-            context().lambda(() -> (BiConsumer) (firstArg, secondArg) -> capturedValue.set(firstArg + " " + secondArg));
+            context().lambda(() -> (BiConsumer) (firstArg, secondArg) -> capturedValue.set(firstArg + ", " + secondArg));
           });
-          it("is used to implement as the method behavior", () -> {
-            context().objectWithMethods().biConsumer("1", "2");
+          it("executes the lambda when an undefined method is called having the same property name", () -> {
+            context().objectWithMethods().methodWithoutReturn("1", "2");
 
-            assertThat(capturedValue.get()).isEqualTo("1 2");
+            assertThat(capturedValue.get()).isEqualTo("1, 2");
           });
-          xit("ignores any additional method arguments", () -> {
+          it("ignores any additional method arguments", () -> {
+            context().objectWithMethods().methodWithoutReturn("1", "2", "3");
 
+            assertThat(capturedValue.get()).isEqualTo("1, 2");
           });
-          xit("always returns null", () -> { //primitives?
+          it("always returns null if the method has a return value", () -> { //primitives?
+            context().propertyName(() -> "methodWithReturn");
 
+            String result = context().objectWithMethods().methodWithReturn("1", "2");
+
+            assertThat(result).isNull();
+          });
+          it("passes null to the lambda if the method doesn't have enough arguments", () -> {
+            context().objectWithMethods().methodWithoutReturn();
+
+            assertThat(capturedValue.get()).isEqualTo("null, null");
           });
         });
 
         describe("if the lambda is a BiFunction", () -> {
-          context().propertyName(() -> "biFunction");
+          context().propertyName(() -> "methodWithReturn");
           beforeEach(() -> {
-            context().lambda(() -> (BiFunction) (firstArg, secondArg) -> firstArg + " " + secondArg);
+            context().lambda(() -> (BiFunction) (firstArg, secondArg) -> firstArg + "&" + secondArg);
           });
-          it("is used to implement as the method behavior", () -> {
-            String result = context().objectWithMethods().biFunction("A", "B");
+          it("executes the lambda when an undefined method is called having the same property name", () -> {
+            String result = context().objectWithMethods().methodWithReturn("A", "B");
 
-            assertThat(result).isEqualTo("A B");
+            assertThat(result).isEqualTo("A&B");
           });
-          xit("ignores any additional method arguments", () -> {
+          it("ignores any additional method arguments", () -> {
+            String result = context().objectWithMethods().methodWithReturn("A", "B", "C");
 
+            assertThat(result).isEqualTo("A&B");
+          });
+          it("passes null to the lambda if the method doesn't have enough arguments", () -> {
+            String result = context().objectWithMethods().methodWithReturn("A");
+
+            assertThat(result).isEqualTo("A&null");
           });
         });
 
