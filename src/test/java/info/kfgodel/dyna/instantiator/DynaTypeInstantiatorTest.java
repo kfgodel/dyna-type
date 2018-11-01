@@ -3,8 +3,8 @@ package info.kfgodel.dyna.instantiator;
 import ar.com.dgarcia.javaspec.api.JavaSpec;
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner;
 import info.kfgodel.dyna.DynaTestContext;
-import info.kfgodel.dyna.TestTypeWithAccessors;
 import info.kfgodel.dyna.impl.instantiator.DynaTypeInstantiator;
+import info.kfgodel.dyna.testtypes.TestTypeWithAccessors;
 import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
