@@ -5,6 +5,7 @@ import info.kfgodel.dyna.impl.instantiator.DynaTypeInstantiator;
 import info.kfgodel.dyna.testtypes.TestTypeWithAccessors;
 import info.kfgodel.dyna.testtypes.TestTypeWithMethods;
 
+import java.util.Map;
 import java.util.function.Supplier;
 
 /**
@@ -16,10 +17,22 @@ public interface DynaTestContext extends TestContext {
   void objectWithAccessors(Supplier<TestTypeWithAccessors> definition);
 
   TestTypeWithMethods objectWithMethods();
-
   void objectWithMethods(Supplier<TestTypeWithMethods> definition);
 
   DynaTypeInstantiator instantiator();
   void instantiator(Supplier<DynaTypeInstantiator> definition);
+
+  Map<String, Object> initialState();
+
+  void initialState(Supplier<Map<String, Object>> definition);
+
+  String propertyName();
+
+  void propertyName(Supplier<String> definition);
+
+  <L> L lambda();
+
+  <L> void lambda(Supplier<L> definition);
+
 
 }

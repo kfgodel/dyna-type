@@ -3,9 +3,16 @@ package info.kfgodel.dyna;
 import ar.com.dgarcia.javaspec.api.JavaSpec;
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner;
 import ar.com.dgarcia.javaspec.api.variable.Variable;
+import com.google.common.collect.ImmutableMap;
 import info.kfgodel.dyna.impl.instantiator.DynaTypeInstantiator;
 import info.kfgodel.dyna.testtypes.TestTypeWithMethods;
 import org.junit.runner.RunWith;
+
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,30 +24,43 @@ public class MethodExecutionTest extends JavaSpec<DynaTestContext> {
   @Override
   public void define() {
     describe("a dyna object", () -> {
-      context().objectWithMethods(() -> DynaTypeInstantiator.create().instantiate(TestTypeWithMethods.class));
+      context().objectWithMethods(() -> DynaTypeInstantiator.create().instantiate(TestTypeWithMethods.class, context().initialState()));
 
-      describe("when a state property value is a lambda and an undefined method with the same name gets called", () -> {
-        describe("if the lambda is a Runnable", () -> {
+      describe("with a lambda as a property value", () -> {
+        context().initialState(() -> ImmutableMap.<String, Object>builder()
+          .put(context().propertyName(), context().lambda())
+          .build()
+        );
+
+
+        describe("if the lambda is a runnable", () -> {
+          context().propertyName(() -> "runnable");
+
           Variable<Boolean> executed = Variable.of(false);
           beforeEach(() -> {
-            context().objectWithMethods().setRunnable(() -> executed.set(true));
+            executed.set(false);
+            context().lambda(() -> (Runnable) () -> executed.set(true));
           });
-          it("is used to implement as the method behavior", () -> {
+
+          it("uses the lambda as the behavior of an undefined method with the same name", () -> {
             context().objectWithMethods().runnable();
 
             assertThat(executed.get()).isTrue();
           });
+
           xit("ignores any method arguments", () -> {
 
           });
           xit("always returns null", () -> { //primitives?
 
           });
+
         });
 
         describe("if the lambda is a Supplier", () -> {
+          context().propertyName(() -> "supplier");
           beforeEach(() -> {
-            context().objectWithMethods().setSupplier(() -> "result");
+            context().lambda(() -> (Supplier) () -> "result");
           });
           it("is used to implement as the method behavior", () -> {
             String result = context().objectWithMethods().supplier();
@@ -53,9 +73,12 @@ public class MethodExecutionTest extends JavaSpec<DynaTestContext> {
         });
 
         describe("if the lambda is a Consumer", () -> {
+          context().propertyName(() -> "consumer");
+
           Variable<String> capturedValue = Variable.of(null);
           beforeEach(() -> {
-            context().objectWithMethods().setConsumer(capturedValue::set);
+            capturedValue.set(null);
+            context().lambda(() -> (Consumer<String>) capturedValue::set);
           });
           it("is used to implement as the method behavior", () -> {
             context().objectWithMethods().consumer("a value");
@@ -71,8 +94,9 @@ public class MethodExecutionTest extends JavaSpec<DynaTestContext> {
         });
 
         describe("if the lambda is a Function", () -> {
+          context().propertyName(() -> "function");
           beforeEach(() -> {
-            context().objectWithMethods().setFunction((value) -> value + "&" + value);
+            context().lambda(() -> (Function) (value) -> value + "&" + value);
           });
           it("is used to implement as the method behavior", () -> {
             String result = context().objectWithMethods().function("aValue");
@@ -85,9 +109,11 @@ public class MethodExecutionTest extends JavaSpec<DynaTestContext> {
         });
 
         describe("if the lambda is a BiConsumer", () -> {
+          context().propertyName(() -> "biConsumer");
           Variable<String> capturedValue = Variable.of(null);
           beforeEach(() -> {
-            context().objectWithMethods().setBiConsumer((firstArg, secondArg) -> capturedValue.set(firstArg + " " + secondArg));
+            capturedValue.set(null);
+            context().lambda(() -> (BiConsumer) (firstArg, secondArg) -> capturedValue.set(firstArg + " " + secondArg));
           });
           it("is used to implement as the method behavior", () -> {
             context().objectWithMethods().biConsumer("1", "2");
@@ -103,8 +129,9 @@ public class MethodExecutionTest extends JavaSpec<DynaTestContext> {
         });
 
         describe("if the lambda is a BiFunction", () -> {
+          context().propertyName(() -> "biFunction");
           beforeEach(() -> {
-            context().objectWithMethods().setBiFunction((firstArg, secondArg) -> firstArg + " " + secondArg);
+            context().lambda(() -> (BiFunction) (firstArg, secondArg) -> firstArg + " " + secondArg);
           });
           it("is used to implement as the method behavior", () -> {
             String result = context().objectWithMethods().biFunction("A", "B");

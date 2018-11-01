@@ -18,12 +18,12 @@ public class BasicPropertiesAccessTest extends JavaSpec<DynaTestContext> {
     describe("a dyna object with property accessors", () -> {
       context().objectWithAccessors(() -> DynaTypeInstantiator.create().instantiate(TestTypeWithAccessors.class));
 
-      it("returns the current state value of a property when invoking its undefined getter accessor", () -> {
+      it("returns the current initialState value of a property when invoking its undefined getter accessor", () -> {
         String name = context().objectWithAccessors().getName();
         assertThat(name).isNull();
       });
 
-      it("changes the current state value using the undefined property setter accessor", () -> {
+      it("changes the current initialState value using the undefined property setter accessor", () -> {
         context().objectWithAccessors().setName("a new name");
         assertThat(context().objectWithAccessors().getName()).isEqualTo("a new name");
       });

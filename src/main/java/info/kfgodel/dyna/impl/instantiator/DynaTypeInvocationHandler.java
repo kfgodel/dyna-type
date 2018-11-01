@@ -90,9 +90,14 @@ public class DynaTypeInvocationHandler implements InvocationHandler {
     return Optional.of(propertyName);
   }
 
-  public static DynaTypeInvocationHandler create() {
+  public static DynaTypeInvocationHandler createEmpty() {
+    HashMap<String, Object> initialState = new HashMap<>();
+    return create(initialState);
+  }
+
+  public static DynaTypeInvocationHandler create(Map<String, Object> initialState) {
     DynaTypeInvocationHandler handler = new DynaTypeInvocationHandler();
-    handler.dynaState = new HashMap<>();
+    handler.dynaState = initialState;
     return handler;
   }
 
