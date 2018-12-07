@@ -1,6 +1,7 @@
 package info.kfgodel.dyna.impl.instantiator;
 
 import info.kfgodel.dyna.api.exceptions.DynaException;
+import info.kfgodel.dyna.api.instantiator.DynaObject;
 import info.kfgodel.dyna.api.instantiator.Instantiator;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.implementation.InvocationHandlerAdapter;
@@ -35,7 +36,7 @@ public class DynaTypeInstantiator implements Instantiator {
   }
 
   private <T> T instantiateProxyOf(Class<T> expectedInstanceType, InvocationHandler handler) {
-    List<Type> interfaceTypes = Arrays.asList();
+    List<Type> interfaceTypes = Arrays.asList(DynaObject.class);
     Class<? extends T> proxyClass = new ByteBuddy()
       .subclass(expectedInstanceType)
       .implement(interfaceTypes)

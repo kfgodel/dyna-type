@@ -24,11 +24,6 @@ public class DynaTypeInstantiatorTest extends JavaSpec<DynaTestContext> {
         assertThat(instance).isNotNull();
       });
 
-      itThrows(IllegalArgumentException.class, "when used for primitive types", () -> {
-        context().instantiator().instantiate(String.class);
-      }, (e) -> {
-        assertThat(e).hasMessage("Cannot subclass primitive, array or final types: class java.lang.String");
-      });
     });
 
   }

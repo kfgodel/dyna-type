@@ -4,6 +4,7 @@ import ar.com.dgarcia.javaspec.api.JavaSpec;
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import info.kfgodel.dyna.api.instantiator.DynaObject;
 import info.kfgodel.dyna.impl.instantiator.DynaTypeInstantiator;
 import info.kfgodel.dyna.testtypes.TestTypeWithAccessors;
 import org.junit.runner.RunWith;
@@ -53,6 +54,12 @@ public class BasicPropertiesAccessTest extends JavaSpec<DynaTestContext> {
         assertThat(context().objectWithAccessors().getSurname()).isEqualTo("World");
       });
 
+      describe("when typed as DynaObject", () -> {
+        it("allows access to its internal state", () -> {
+          DynaObject dynaObject = (DynaObject) context().objectWithAccessors();
+          assertThat(dynaObject.getState()).isSameAs(context().initialState());
+        });
+      });
 
 
     });

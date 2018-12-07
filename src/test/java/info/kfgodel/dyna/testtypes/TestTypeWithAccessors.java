@@ -1,10 +1,12 @@
 package info.kfgodel.dyna.testtypes;
 
+import info.kfgodel.dyna.api.instantiator.DynaObject;
+
 /**
  * This type defines a name property with a pair of accessors
  * Date: 28/10/18 - 17:48
  */
-public interface TestTypeWithAccessors {
+public interface TestTypeWithAccessors extends DynaObject {
 
   String getName();
   void setName(String aName);

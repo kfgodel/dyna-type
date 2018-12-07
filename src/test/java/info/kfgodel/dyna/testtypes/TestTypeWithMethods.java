@@ -1,10 +1,12 @@
 package info.kfgodel.dyna.testtypes;
 
+import info.kfgodel.dyna.api.instantiator.DynaObject;
+
 /**
  * This type defines methods that can be implemented by lambdas
  * Date: 01/11/18 - 00:30
  */
-public interface TestTypeWithMethods {
+public interface TestTypeWithMethods extends DynaObject {
 
   void runnable();
 

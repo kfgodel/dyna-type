@@ -1,6 +1,7 @@
 package info.kfgodel.dyna.impl.instantiator;
 
 import info.kfgodel.dyna.api.exceptions.DynaException;
+import info.kfgodel.dyna.api.instantiator.DynaObject;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -27,6 +28,11 @@ public class DynaTypeInvocationHandler implements InvocationHandler {
   @Override
   public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
     String methodName = method.getName();
+
+    if (method.getName().equals("getState") && method.getParameterTypes().length == 0) {
+      return dynaState;
+    }
+
     Optional<String> gettedProperty = tryAsGetter(methodName);
     if (gettedProperty.isPresent()) {
       return dynaState.get(gettedProperty.get());
@@ -63,6 +69,14 @@ public class DynaTypeInvocationHandler implements InvocationHandler {
     if ((value instanceof BiFunction)) {
       BiFunction biFunctionLambda = (BiFunction) value;
       return biFunctionLambda.apply(ensureArg(args, 0), ensureArg(args, 1));
+    }
+
+    if (methodName.equals("equals") && method.getParameterTypes().length == 1 && Object.class.equals(method.getParameterTypes()[0]) && args.length == 1) {
+      Object arg = args[0];
+      if (DynaObject.class.isInstance(args[0])) {
+        DynaObject otherDyna = (DynaObject) arg;
+        return dynaState == otherDyna.getState();
+      }
     }
 
     throw new DynaException("Missing implementation for method[" + method + "] and args: " + Arrays.toString(args));
