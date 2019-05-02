@@ -10,8 +10,7 @@
   <parent>
     <artifactId>java-pom</artifactId>
     <groupId>info.kfgodel</groupId>
-    <version>0.1.5-SNAPSHOT</version>
-    <relativePath>../kfgodel-java-pom/pom.xml</relativePath>
+    <version>0.1.5</version>
   </parent>
 
   <name>Dyna Type</name>
@@ -52,7 +51,7 @@
     <dependency>
       <groupId>info.kfgodel</groupId>
       <artifactId>java-spec</artifactId>
-      <version>2.4.1</version>
+      <version>2.5.0</version>
       <scope>test</scope>
     </dependency>
 

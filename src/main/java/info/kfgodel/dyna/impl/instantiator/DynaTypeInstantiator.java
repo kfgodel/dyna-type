@@ -9,6 +9,7 @@ import net.bytebuddy.matcher.ElementMatchers;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Type;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,17 +25,16 @@ public class DynaTypeInstantiator implements Instantiator {
   }
 
   public <T> T instantiate(Class<T> expectedInstanceType, Map<String, Object> initialState) {
-    InvocationHandler handler = DynaTypeInvocationHandler.create(initialState);
-    return instantiateProxyOf(expectedInstanceType, handler);
+    return instantiateProxyOf(expectedInstanceType, initialState);
   }
 
   @Override
   public <T> T instantiate(Class<T> expectedInstanceType) {
-    InvocationHandler handler = DynaTypeInvocationHandler.createEmpty();
-    return instantiateProxyOf(expectedInstanceType, handler);
+    return instantiateProxyOf(expectedInstanceType, new HashMap<>());
   }
 
-  private <T> T instantiateProxyOf(Class<T> expectedInstanceType, InvocationHandler handler) {
+  private <T> T instantiateProxyOf(Class<T> expectedInstanceType, Map<String, Object> initialState) {
+    InvocationHandler handler = ProxyInvocationHandler.create(initialState);
     List<Type> interfaceTypes = Arrays.asList();
     Class<? extends T> proxyClass = new ByteBuddy()
       .subclass(expectedInstanceType)
