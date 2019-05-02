@@ -1,15 +1,6 @@
 package info.kfgodel.dyna.impl.instantiator;
 
-import com.google.common.collect.Lists;
 import info.kfgodel.dyna.api.exceptions.DynaException;
-import info.kfgodel.dyna.impl.instantiator.handlers.BiConsumerValueAsMethodHandler;
-import info.kfgodel.dyna.impl.instantiator.handlers.BiFunctionValueAsMethodHandler;
-import info.kfgodel.dyna.impl.instantiator.handlers.ConsumerValueAsMethodHandler;
-import info.kfgodel.dyna.impl.instantiator.handlers.FunctionValueAsMethodHandler;
-import info.kfgodel.dyna.impl.instantiator.handlers.GetterPropertyHandler;
-import info.kfgodel.dyna.impl.instantiator.handlers.RunnableValueAsMethodHandler;
-import info.kfgodel.dyna.impl.instantiator.handlers.SetterPropertyHandler;
-import info.kfgodel.dyna.impl.instantiator.handlers.SupplierValueAsMethodHandler;
 import info.kfgodel.dyna.impl.instantiator.invocation.DynaMethodInvocationHandler;
 import info.kfgodel.dyna.impl.instantiator.invocation.DynaTypeMethodInvocation;
 import info.kfgodel.dyna.impl.instantiator.invocation.result.HandlingResult;
@@ -49,24 +40,11 @@ public class ProxyInvocationHandler implements InvocationHandler {
     throw new DynaException("Missing implementation for method[" + method + "] and args: " + Arrays.toString(args));
   }
 
-  public static ProxyInvocationHandler create(Map<String, Object> initialState) {
+  public static ProxyInvocationHandler create(Map<String, Object> initialState, List<DynaMethodInvocationHandler> handlers) {
     ProxyInvocationHandler handler = new ProxyInvocationHandler();
     handler.dynaState = initialState;
-    handler.orderedHandlers = initializeHandlers();
+    handler.orderedHandlers = handlers;
     return handler;
-  }
-
-  private static List<DynaMethodInvocationHandler> initializeHandlers() {
-    return Lists.newArrayList(
-      GetterPropertyHandler.create(),
-      SetterPropertyHandler.create(),
-      RunnableValueAsMethodHandler.create(),
-      SupplierValueAsMethodHandler.create(),
-      ConsumerValueAsMethodHandler.create(),
-      BiConsumerValueAsMethodHandler.create(),
-      FunctionValueAsMethodHandler.create(),
-      BiFunctionValueAsMethodHandler.create()
-    );
   }
 
 }
