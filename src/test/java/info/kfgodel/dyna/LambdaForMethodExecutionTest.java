@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Date: 01/11/18 - 00:28
  */
 @RunWith(JavaSpecRunner.class)
-public class MethodExecutionTest extends JavaSpec<DynaTestContext> {
+public class LambdaForMethodExecutionTest extends JavaSpec<DynaTestContext> {
   @Override
   public void define() {
     describe("a dyna object", () -> {

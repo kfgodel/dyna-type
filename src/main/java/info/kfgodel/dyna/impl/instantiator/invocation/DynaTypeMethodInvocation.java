@@ -29,7 +29,7 @@ public class DynaTypeMethodInvocation {
   @Override
   public String toString() {
     return "DynaTypeMethodInvocation{" +
-      "invokedMethod=" + invokedMethod +
+      "invokedMethod=" + invokedMethod.getDeclaringClass().getSimpleName() + "." + invokedMethod.getName() +
       ", passedArguments=" + Arrays.toString(passedArguments) +
       '}';
   }

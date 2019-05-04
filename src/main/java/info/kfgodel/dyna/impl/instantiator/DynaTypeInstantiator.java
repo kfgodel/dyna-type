@@ -13,7 +13,9 @@ import info.kfgodel.dyna.impl.instantiator.handlers.SetterPropertyHandler;
 import info.kfgodel.dyna.impl.instantiator.handlers.SupplierValueAsMethodHandler;
 import info.kfgodel.dyna.impl.instantiator.invocation.DynaMethodInvocationHandler;
 import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.description.method.MethodDescription;
 import net.bytebuddy.implementation.InvocationHandlerAdapter;
+import net.bytebuddy.matcher.ElementMatcher;
 import net.bytebuddy.matcher.ElementMatchers;
 
 import java.lang.reflect.InvocationHandler;
@@ -52,7 +54,7 @@ public class DynaTypeInstantiator implements Instantiator {
     Class<? extends T> proxyClass = new ByteBuddy()
       .subclass(expectedInstanceType)
       .implement(interfaceTypes)
-      .method(ElementMatchers.not(ElementMatchers.isDefaultMethod()))
+      .method(isInterceptable())
       .intercept(InvocationHandlerAdapter.of(handler))
       .make()
       .load(expectedInstanceType.getClassLoader())
@@ -63,6 +65,20 @@ public class DynaTypeInstantiator implements Instantiator {
     } catch (Exception e) {
       throw new DynaException("Failed to instantiate proxy: " + e.getMessage(), e);
     }
+  }
+
+  private ElementMatcher.Junction<MethodDescription> isInterceptable() {
+    // Every method declared by object is intercepted so it can be redefined
+    ElementMatcher.Junction<MethodDescription> isDeclaredByObject = ElementMatchers.isDeclaredBy(Object.class);
+
+    // All abstract methods without a definition are intercepted
+    ElementMatcher.Junction<MethodDescription> isAnUnimplementedAbstractMethod = ElementMatchers.isAbstract();
+
+    // All non default interface methods are intercepted
+    ElementMatcher.Junction<MethodDescription> isDeclaredByInterfaceAndIsNotDefault = ElementMatchers.isDeclaredBy(ElementMatchers.isInterface())
+      .and(ElementMatchers.not(ElementMatchers.isDefaultMethod()));
+
+    return isDeclaredByObject.or(isAnUnimplementedAbstractMethod).or(isDeclaredByInterfaceAndIsNotDefault);
   }
 
   private static List<DynaMethodInvocationHandler> initializeHandlers() {
