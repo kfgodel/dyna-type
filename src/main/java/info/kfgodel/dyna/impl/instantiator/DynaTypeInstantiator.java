@@ -61,7 +61,7 @@ public class DynaTypeInstantiator implements Instantiator {
       T proxy = proxyClass.getConstructor().newInstance();
       return proxy;
     } catch (Exception e) {
-      throw new DynaException("Failed to instante proxy: " + e.getMessage(), e);
+      throw new DynaException("Failed to instantiate proxy: " + e.getMessage(), e);
     }
   }
 
