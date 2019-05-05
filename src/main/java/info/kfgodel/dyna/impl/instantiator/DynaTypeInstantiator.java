@@ -14,6 +14,7 @@ import info.kfgodel.dyna.impl.proxy.handlers.HashcodeMethodHandler;
 import info.kfgodel.dyna.impl.proxy.handlers.RunnableValueAsMethodHandler;
 import info.kfgodel.dyna.impl.proxy.handlers.SetterPropertyHandler;
 import info.kfgodel.dyna.impl.proxy.handlers.SupplierValueAsMethodHandler;
+import info.kfgodel.dyna.impl.proxy.handlers.ToStringMethodHandler;
 import info.kfgodel.dyna.impl.proxy.invocation.DynaMethodInvocationHandler;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.description.method.MethodDescription;
@@ -95,7 +96,8 @@ public class DynaTypeInstantiator implements Instantiator {
       GetterPropertyHandler.create(),
       SetterPropertyHandler.create(),
       HashcodeMethodHandler.create(),
-      EqualsMethodHandler.create()
+      EqualsMethodHandler.create(),
+      ToStringMethodHandler.create()
     );
   }
 
