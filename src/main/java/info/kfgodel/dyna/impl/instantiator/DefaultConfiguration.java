@@ -82,4 +82,27 @@ public class DefaultConfiguration implements InstantiatorConfiguration {
     this.chainOfHandlers.add(methodHandler);
     return this;
   }
+
+  /**
+   * Adds the given handler after the one referenced by its type.<br>
+   *   If the chain doesn't contain a handler of that type, then the new is added at the end
+   * @param referenceHandlerClass The class that indicates the type of handler to find
+   * @param addedHandler The new handler to add
+   * @return This instance for method chaining
+   */
+  public DefaultConfiguration addBefore(Class<?> referenceHandlerClass, DynaMethodInvocationHandler addedHandler) {
+    int referenceHandlerIndex = this.findIndexOf(referenceHandlerClass);
+    this.chainOfHandlers.add(referenceHandlerIndex, addedHandler);
+    return this;
+  }
+
+  private int findIndexOf(Class<?> referenceHandlerClass) {
+    for (int i = 0; i < chainOfHandlers.size(); i++) {
+      DynaMethodInvocationHandler handler = chainOfHandlers.get(i);
+      if(referenceHandlerClass.isInstance(handler)){
+        return i;
+      }
+    }
+    return chainOfHandlers.size();
+  }
 }
