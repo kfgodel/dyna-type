@@ -1,6 +1,6 @@
 package info.kfgodel.dyna.impl.proxy;
 
-import info.kfgodel.dyna.api.exceptions.DynaException;
+import info.kfgodel.dyna.api.exceptions.MissingMethodImplementationException;
 import info.kfgodel.dyna.impl.proxy.invocation.DynaMethodInvocationHandler;
 import info.kfgodel.dyna.impl.proxy.invocation.DynaTypeMethodInvocation;
 import info.kfgodel.dyna.impl.proxy.invocation.result.HandlingResult;
@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +36,7 @@ public class ProxyInvocationHandler implements InvocationHandler {
     }
 
     // If no handler was used
-    throw new DynaException("Missing implementation for method[" + method + "] and args: " + Arrays.toString(args));
+    throw new MissingMethodImplementationException(invocation);
   }
 
   public static ProxyInvocationHandler create(Map<String, Object> initialState, List<DynaMethodInvocationHandler> handlers) {

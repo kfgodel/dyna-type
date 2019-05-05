@@ -75,4 +75,12 @@ public class DynaTypeMethodInvocation {
     }
     return passedArguments[argumentIndex];
   }
+
+  public Method getInvokedMethod() {
+    return this.invokedMethod;
+  }
+
+  public Object getInvokedProxy() {
+    return this.invokedProxy;
+  }
 }

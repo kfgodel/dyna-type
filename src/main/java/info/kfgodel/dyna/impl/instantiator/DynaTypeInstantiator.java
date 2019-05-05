@@ -7,8 +7,10 @@ import info.kfgodel.dyna.impl.proxy.ProxyInvocationHandler;
 import info.kfgodel.dyna.impl.proxy.handlers.BiConsumerValueAsMethodHandler;
 import info.kfgodel.dyna.impl.proxy.handlers.BiFunctionValueAsMethodHandler;
 import info.kfgodel.dyna.impl.proxy.handlers.ConsumerValueAsMethodHandler;
+import info.kfgodel.dyna.impl.proxy.handlers.EqualsMethodHandler;
 import info.kfgodel.dyna.impl.proxy.handlers.FunctionValueAsMethodHandler;
 import info.kfgodel.dyna.impl.proxy.handlers.GetterPropertyHandler;
+import info.kfgodel.dyna.impl.proxy.handlers.HashcodeMethodHandler;
 import info.kfgodel.dyna.impl.proxy.handlers.RunnableValueAsMethodHandler;
 import info.kfgodel.dyna.impl.proxy.handlers.SetterPropertyHandler;
 import info.kfgodel.dyna.impl.proxy.handlers.SupplierValueAsMethodHandler;
@@ -91,7 +93,9 @@ public class DynaTypeInstantiator implements Instantiator {
       FunctionValueAsMethodHandler.create(),
       BiFunctionValueAsMethodHandler.create(),
       GetterPropertyHandler.create(),
-      SetterPropertyHandler.create()
+      SetterPropertyHandler.create(),
+      HashcodeMethodHandler.create(),
+      EqualsMethodHandler.create()
     );
   }
 

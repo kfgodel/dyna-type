@@ -20,6 +20,9 @@ public interface DynaTestContext extends TestContext {
   TestTypeWithMethods objectWithMethods();
   void objectWithMethods(Supplier<TestTypeWithMethods> definition);
 
+  TestTypeWithAccessors otherObject();
+  void otherObject(Supplier<TestTypeWithAccessors> definition);
+
   DynaTypeInstantiator instantiator();
   void instantiator(Supplier<DynaTypeInstantiator> definition);
 
