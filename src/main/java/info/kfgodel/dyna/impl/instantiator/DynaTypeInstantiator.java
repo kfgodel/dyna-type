@@ -3,15 +3,16 @@ package info.kfgodel.dyna.impl.instantiator;
 import com.google.common.collect.Lists;
 import info.kfgodel.dyna.api.exceptions.DynaException;
 import info.kfgodel.dyna.api.instantiator.Instantiator;
-import info.kfgodel.dyna.impl.instantiator.handlers.BiConsumerValueAsMethodHandler;
-import info.kfgodel.dyna.impl.instantiator.handlers.BiFunctionValueAsMethodHandler;
-import info.kfgodel.dyna.impl.instantiator.handlers.ConsumerValueAsMethodHandler;
-import info.kfgodel.dyna.impl.instantiator.handlers.FunctionValueAsMethodHandler;
-import info.kfgodel.dyna.impl.instantiator.handlers.GetterPropertyHandler;
-import info.kfgodel.dyna.impl.instantiator.handlers.RunnableValueAsMethodHandler;
-import info.kfgodel.dyna.impl.instantiator.handlers.SetterPropertyHandler;
-import info.kfgodel.dyna.impl.instantiator.handlers.SupplierValueAsMethodHandler;
-import info.kfgodel.dyna.impl.instantiator.invocation.DynaMethodInvocationHandler;
+import info.kfgodel.dyna.impl.proxy.ProxyInvocationHandler;
+import info.kfgodel.dyna.impl.proxy.handlers.BiConsumerValueAsMethodHandler;
+import info.kfgodel.dyna.impl.proxy.handlers.BiFunctionValueAsMethodHandler;
+import info.kfgodel.dyna.impl.proxy.handlers.ConsumerValueAsMethodHandler;
+import info.kfgodel.dyna.impl.proxy.handlers.FunctionValueAsMethodHandler;
+import info.kfgodel.dyna.impl.proxy.handlers.GetterPropertyHandler;
+import info.kfgodel.dyna.impl.proxy.handlers.RunnableValueAsMethodHandler;
+import info.kfgodel.dyna.impl.proxy.handlers.SetterPropertyHandler;
+import info.kfgodel.dyna.impl.proxy.handlers.SupplierValueAsMethodHandler;
+import info.kfgodel.dyna.impl.proxy.invocation.DynaMethodInvocationHandler;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.description.method.MethodDescription;
 import net.bytebuddy.implementation.InvocationHandlerAdapter;
@@ -83,14 +84,14 @@ public class DynaTypeInstantiator implements Instantiator {
 
   private static List<DynaMethodInvocationHandler> initializeHandlers() {
     return Lists.newArrayList(
-      GetterPropertyHandler.create(),
-      SetterPropertyHandler.create(),
       RunnableValueAsMethodHandler.create(),
       SupplierValueAsMethodHandler.create(),
       ConsumerValueAsMethodHandler.create(),
       BiConsumerValueAsMethodHandler.create(),
       FunctionValueAsMethodHandler.create(),
-      BiFunctionValueAsMethodHandler.create()
+      BiFunctionValueAsMethodHandler.create(),
+      GetterPropertyHandler.create(),
+      SetterPropertyHandler.create()
     );
   }
 

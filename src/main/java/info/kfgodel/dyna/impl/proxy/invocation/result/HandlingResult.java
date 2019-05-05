@@ -1,4 +1,4 @@
-package info.kfgodel.dyna.impl.instantiator.invocation.result;
+package info.kfgodel.dyna.impl.proxy.invocation.result;
 
 /**
  * This type represents the possible outcomes of an invocation handler.<br>

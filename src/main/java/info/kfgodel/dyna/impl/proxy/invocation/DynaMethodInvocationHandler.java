@@ -1,6 +1,6 @@
-package info.kfgodel.dyna.impl.instantiator.invocation;
+package info.kfgodel.dyna.impl.proxy.invocation;
 
-import info.kfgodel.dyna.impl.instantiator.invocation.result.HandlingResult;
+import info.kfgodel.dyna.impl.proxy.invocation.result.HandlingResult;
 
 /**
  * This type represents the contract that an invocation handler must implement to handle a method invocation.<br>

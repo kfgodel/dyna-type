@@ -1,10 +1,10 @@
-package info.kfgodel.dyna.impl.instantiator.handlers;
+package info.kfgodel.dyna.impl.proxy.handlers;
 
-import info.kfgodel.dyna.impl.instantiator.invocation.DynaMethodInvocationHandler;
-import info.kfgodel.dyna.impl.instantiator.invocation.DynaTypeMethodInvocation;
-import info.kfgodel.dyna.impl.instantiator.invocation.result.HandledResult;
-import info.kfgodel.dyna.impl.instantiator.invocation.result.HandlingResult;
-import info.kfgodel.dyna.impl.instantiator.invocation.result.UnhandledResult;
+import info.kfgodel.dyna.impl.proxy.invocation.DynaMethodInvocationHandler;
+import info.kfgodel.dyna.impl.proxy.invocation.DynaTypeMethodInvocation;
+import info.kfgodel.dyna.impl.proxy.invocation.result.HandledResult;
+import info.kfgodel.dyna.impl.proxy.invocation.result.HandlingResult;
+import info.kfgodel.dyna.impl.proxy.invocation.result.UnhandledResult;
 
 import java.util.function.Consumer;
 

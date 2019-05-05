@@ -1,4 +1,4 @@
-package info.kfgodel.dyna.impl.instantiator.invocation;
+package info.kfgodel.dyna.impl.proxy.invocation;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;

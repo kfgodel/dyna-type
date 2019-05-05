@@ -1,4 +1,4 @@
-package info.kfgodel.dyna.impl.instantiator.invocation.result;
+package info.kfgodel.dyna.impl.proxy.invocation.result;
 
 /**
  * Date: 01/05/19 - 20:34

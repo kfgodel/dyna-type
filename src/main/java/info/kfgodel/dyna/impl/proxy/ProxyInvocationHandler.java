@@ -1,9 +1,9 @@
-package info.kfgodel.dyna.impl.instantiator;
+package info.kfgodel.dyna.impl.proxy;
 
 import info.kfgodel.dyna.api.exceptions.DynaException;
-import info.kfgodel.dyna.impl.instantiator.invocation.DynaMethodInvocationHandler;
-import info.kfgodel.dyna.impl.instantiator.invocation.DynaTypeMethodInvocation;
-import info.kfgodel.dyna.impl.instantiator.invocation.result.HandlingResult;
+import info.kfgodel.dyna.impl.proxy.invocation.DynaMethodInvocationHandler;
+import info.kfgodel.dyna.impl.proxy.invocation.DynaTypeMethodInvocation;
+import info.kfgodel.dyna.impl.proxy.invocation.result.HandlingResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
