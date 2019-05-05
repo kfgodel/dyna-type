@@ -16,7 +16,7 @@ public class ObjectFromAbstractClassTest extends JavaSpec<DynaTestContext> {
   @Override
   public void define() {
     describe("a dyna object created from an abstract class", () -> {
-      test().abstractObject(() -> DynaTypeInstantiator.create().instantiate(AbstractClass.class));
+      test().abstractObject(() -> DynaTypeInstantiator.createDefault().instantiate(AbstractClass.class));
 
       it("has its own state data", () -> {
         test().abstractObject().setName("a name");

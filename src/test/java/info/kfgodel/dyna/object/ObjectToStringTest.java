@@ -19,7 +19,7 @@ public class ObjectToStringTest extends JavaSpec<DynaTestContext> {
   @Override
   public void define() {
     describe("a dyna object", () -> {
-      test().objectWithAccessors(() -> DynaTypeInstantiator.create().instantiate(TestTypeWithAccessors.class, test().initialState()));
+      test().objectWithAccessors(() -> DynaTypeInstantiator.createDefault().instantiate(TestTypeWithAccessors.class, test().initialState()));
       context().initialState(() -> Maps.newHashMap(
         ImmutableMap.<String, Object>builder()
           .put("name", "Hello")

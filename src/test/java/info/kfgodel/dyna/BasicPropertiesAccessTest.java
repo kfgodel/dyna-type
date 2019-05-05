@@ -19,7 +19,7 @@ public class BasicPropertiesAccessTest extends JavaSpec<DynaTestContext> {
   @Override
   public void define() {
     describe("a dyna object with property accessor methods", () -> {
-      context().objectWithAccessors(() -> DynaTypeInstantiator.create().instantiate(TestTypeWithAccessors.class, context().initialState()));
+      context().objectWithAccessors(() -> DynaTypeInstantiator.createDefault().instantiate(TestTypeWithAccessors.class, context().initialState()));
       context().initialState(() -> Maps.newHashMap(
         ImmutableMap.<String, Object>builder()
           .put("name", "Hello")

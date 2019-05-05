@@ -24,7 +24,7 @@ public class ObjectEqualityTest extends JavaSpec<DynaTestContext> {
   @Override
   public void define() {
     describe("a dyna object", () -> {
-      test().objectWithAccessors(() -> DynaTypeInstantiator.create().instantiate(TestTypeWithAccessors.class, test().initialState()));
+      test().objectWithAccessors(() -> DynaTypeInstantiator.createDefault().instantiate(TestTypeWithAccessors.class, test().initialState()));
       test().initialState(HashMap::new);
 
       describe("by default", () -> {
@@ -42,7 +42,7 @@ public class ObjectEqualityTest extends JavaSpec<DynaTestContext> {
         });
 
         describe("compared to other object", () -> {
-          test().otherObject(() -> DynaTypeInstantiator.create().instantiate(TestTypeWithAccessors.class));
+          test().otherObject(() -> DynaTypeInstantiator.createDefault().instantiate(TestTypeWithAccessors.class));
 
           it("is not equal", () -> {
             assertThat(test().objectWithAccessors()).isNotEqualTo(test().otherObject());

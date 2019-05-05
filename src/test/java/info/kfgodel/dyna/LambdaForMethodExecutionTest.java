@@ -25,7 +25,7 @@ public class LambdaForMethodExecutionTest extends JavaSpec<DynaTestContext> {
   @Override
   public void define() {
     describe("a dyna object", () -> {
-      context().objectWithMethods(() -> DynaTypeInstantiator.create().instantiate(TestTypeWithMethods.class, context().initialState()));
+      context().objectWithMethods(() -> DynaTypeInstantiator.createDefault().instantiate(TestTypeWithMethods.class, context().initialState()));
 
       describe("with a lambda as a property value", () -> {
         context().initialState(() -> ImmutableMap.<String, Object>builder()
