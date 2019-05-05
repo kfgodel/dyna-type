@@ -77,4 +77,9 @@ public class DefaultConfiguration implements InstantiatorConfiguration {
     this.implementedInterfaces.add(anInterface);
     return this;
   }
+
+  public DefaultConfiguration withHandler(DynaMethodInvocationHandler methodHandler) {
+    this.chainOfHandlers.add(methodHandler);
+    return this;
+  }
 }
