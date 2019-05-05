@@ -105,4 +105,16 @@ public class DefaultConfiguration implements InstantiatorConfiguration {
     }
     return chainOfHandlers.size();
   }
+
+  /**
+   * Replaces the handler referenced by its type on the chain with the one provided
+   * @param referenceHandlerClass The type of handler to remove
+   * @param replacementHandler The hanbdler to use as replacement
+   * @return This instance for method chaining
+   */
+  public DefaultConfiguration addInsteadOf(Class<?> referenceHandlerClass, DynaMethodInvocationHandler replacementHandler) {
+    int replacedIndex = this.findIndexOf(referenceHandlerClass);
+    this.chainOfHandlers.set(replacedIndex, replacementHandler);
+    return this;
+  }
 }
