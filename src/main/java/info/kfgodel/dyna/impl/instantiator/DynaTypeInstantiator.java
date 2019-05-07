@@ -12,6 +12,7 @@ import net.bytebuddy.matcher.ElementMatchers;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,7 @@ public class DynaTypeInstantiator implements Instantiator {
 
   private <T> T instantiateProxyOf(Class<T> expectedInstanceType, Map<String, Object> initialState) {
     InvocationHandler handler = ProxyInvocationHandler.create(initialState, configuration.getChainOfHandlers());
-    List<Type> interfaceTypes = configuration.getImplementedInterfaces();
+    List<Type> interfaceTypes = calculateAdditionalInterfaces(expectedInstanceType);
     Class<? extends T> proxyClass = new ByteBuddy()
       .subclass(expectedInstanceType)
       .implement(interfaceTypes)
@@ -60,6 +61,12 @@ public class DynaTypeInstantiator implements Instantiator {
     } catch (Exception e) {
       throw new DynaException("Failed to instantiate proxy: " + e.getMessage(), e);
     }
+  }
+
+  private List<Type> calculateAdditionalInterfaces(Class<?> extendedType) {
+    List<Type> additionalInterfaces = new ArrayList<>(configuration.getImplementedInterfaces());
+    additionalInterfaces.remove(extendedType); // Avoid duplicating an interface if used as super type
+    return additionalInterfaces;
   }
 
   private ElementMatcher.Junction<MethodDescription> isInterceptable() {
