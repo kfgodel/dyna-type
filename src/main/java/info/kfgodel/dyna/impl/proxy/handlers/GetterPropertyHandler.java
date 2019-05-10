@@ -19,7 +19,7 @@ public class GetterPropertyHandler implements DynaMethodInvocationHandler {
   @Override
   public HandlingResult tryToHandle(DynaTypeMethodInvocation invocation) {
     Optional<String> gettedProperty = invocation.getSubstringOnMethodNameAfter(GETTER_PREFIX);
-    if (gettedProperty.isPresent()) {
+    if (gettedProperty.isPresent() && invocation.getArgumentCount() == 0) {
       String propertyName = gettedProperty.get();
       Object propertyValue = invocation.getDynaState().get(propertyName);
       return HandledResult.create(propertyValue);
