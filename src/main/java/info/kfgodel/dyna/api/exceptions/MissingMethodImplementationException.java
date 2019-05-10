@@ -11,7 +11,7 @@ public class MissingMethodImplementationException extends DynaException {
   private final DynaTypeMethodInvocation invocation;
 
   public MissingMethodImplementationException(DynaTypeMethodInvocation invocation) {
-    super("Missing implementation for method[" + invocation.getInvokedMethod() + "] ");
+    super("Missing implementation for method[" + invocation.getInvokedMethod() + "] on object: " + invocation.getInvokedProxy());
     this.invocation = invocation;
   }
 
